@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "module": "commonjs",
-    "target": "es5",
-    "strict": true,
-    "declaration": true
+    "outDir": "./dist",  // Output directory for compiled files
+    "rootDir": "./src",  // Root directory of your source files
+    "strict": true,      // Enable all strict type-checking options
+    "module": "commonjs",// Specify module code generation
+    "target": "es5",     // Specify ECMAScript target version
+    "declaration": true, // Generates corresponding '.d.ts' file
+    "esModuleInterop": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"]
+  "include": [
+    "src/**/*"  // Include all files in the src folder
+  ],
+  "exclude": [
+    "node_modules",  // Exclude the node_modules directory
+    "dist"           // Exclude the dist directory
+  ]
 }
-
