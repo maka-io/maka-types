@@ -71,7 +71,7 @@ declare module 'meteor/maka:http' {
     }
 
     interface RequestInterceptor {
-      (url: string, options: HTTPServer.Options | HTTPClient.Options): Promise<{ url: string; options: HTTPServer.Options | HTTPClient.Options }>;
+      (method: string, url: string, options: HTTPServer.Options | HTTPClient.Options): Promise<{ method: string, url: string; options: HTTPServer.Options | HTTPClient.Options }>;
     }
 
     interface ResponseInterceptor {
