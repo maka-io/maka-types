@@ -70,6 +70,14 @@ declare module 'meteor/maka:http' {
       data: T;
     }
 
+    interface RequestInterceptor {
+      (url: string, options: HTTPServer.Options | HTTPClient.Options): Promise<{ url: string; options: HTTPServer.Options | HTTPClient.Options }>;
+    }
+
+    interface ResponseInterceptor {
+      (response: HTTPCommon.HTTPResponse): Promise<HTTPCommon.HTTPResponse>;
+    }
+
     // Documentation for del, get, post, put follows a similar pattern.
     function del<T = any>(url: string, callOptions?: HTTPServer.Options | HTTPClient.Options): Promise<HTTPCommon.HTTPResponse<T>>;
     function get<T = any>(url: string, callOptions?: HTTPServer.Options | HTTPClient.Options): Promise<HTTPCommon.HTTPResponse<T>>;
