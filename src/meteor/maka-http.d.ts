@@ -27,7 +27,8 @@ declare module 'meteor/maka:http' {
     function call(
       method: string,
       url: string,
-      options?: HTTPServer.Options,
+      optionsOrCallback?: HTTPServer.Options | ((error: any, result?: HTTPCommon.HTTPResponse) => void),
+      callback?: (error: any, result?: HTTPCommon.HTTPResponse) => void
     ): Promise<HTTPCommon.HTTPResponse>;
   }
 
@@ -58,7 +59,8 @@ declare module 'meteor/maka:http' {
     function call(
       method: string,
       url: string,
-      options?: HTTPClient.Options,
+      optionsOrCallback?: HTTPClient.Options | ((error: any, result?: HTTPCommon.HTTPResponse) => void),
+      callback?: (error: any, result?: HTTPCommon.HTTPResponse) => void
     ): Promise<HTTPCommon.HTTPResponse>;
   }
 
@@ -77,7 +79,12 @@ declare module 'meteor/maka:http' {
     }
 
     interface RequestInterceptor {
-      (method: string, url: string, options: HTTPServer.Options | HTTPClient.Options): Promise<{ method: string, url: string; options: HTTPServer.Options | HTTPClient.Options }>;
+      (
+        method: string,
+        url: string,
+        optionsOrCallback?: HTTPServer.Options | HTTPClient.Options | ((error: any, result?: HTTPCommon.HTTPResponse) => void),
+        callback?: (error: any, result?: HTTPCommon.HTTPResponse) => void
+      ): Promise<{ method: string, url: string; options: HTTPServer.Options | HTTPClient.Options }>;
     }
 
     interface ResponseInterceptor {
@@ -85,9 +92,25 @@ declare module 'meteor/maka:http' {
     }
 
     // Documentation for del, get, post, put follows a similar pattern.
-    function del<T = any>(url: string, callOptions?: HTTPServer.Options | HTTPClient.Options): Promise<HTTPCommon.HTTPResponse<T>>;
-    function get<T = any>(url: string, callOptions?: HTTPServer.Options | HTTPClient.Options): Promise<HTTPCommon.HTTPResponse<T>>;
-    function post<T = any>(url: string, callOptions?: HTTPServer.Options | HTTPClient.Options): Promise<HTTPCommon.HTTPResponse<T>>;
-    function put<T = any>(url: string, callOptions?: HTTPServer.Options | HTTPClient.Options): Promise<HTTPCommon.HTTPResponse<T>>;
+    function del<T = any>(
+      url: string,
+      optionsOrCallback?: HTTPServer.Options | HTTPClient.Options | ((error: any, result?: HTTPCommon.HTTPResponse) => void),
+      callback?: (error: any, result?: HTTPCommon.HTTPResponse) => void
+    ): Promise<HTTPCommon.HTTPResponse<T>>;
+    function get<T = any>(
+      url: string,
+      optionsOrCallback?: HTTPServer.Options | HTTPClient.Options | ((error: any, result?: HTTPCommon.HTTPResponse) => void),
+      callback?: (error: any, result?: HTTPCommon.HTTPResponse) => void
+    ): Promise<HTTPCommon.HTTPResponse<T>>;
+    function post<T = any>(
+      url: string,
+      optionsOrCallback?: HTTPServer.Options | HTTPClient.Options | ((error: any, result?: HTTPCommon.HTTPResponse) => void),
+      callback?: (error: any, result?: HTTPCommon.HTTPResponse) => void
+    ): Promise<HTTPCommon.HTTPResponse<T>>;
+    function put<T = any>(
+      url: string,
+      optionsOrCallback?: HTTPServer.Options | HTTPClient.Options | ((error: any, result?: HTTPCommon.HTTPResponse) => void),
+      callback?: (error: any, result?: HTTPCommon.HTTPResponse) => void
+    ): Promise<HTTPCommon.HTTPResponse<T>>;
   }
 }
