@@ -12,6 +12,8 @@ declare module 'meteor/maka:http' {
       params?: { [key: string]: any };
       headers?: { [key: string]: string };
       timeout?: number;
+      retryDelay?: number;
+      maxRetries?: number;
       followRedirects?: boolean;
     }
 
@@ -41,6 +43,8 @@ declare module 'meteor/maka:http' {
       data?: T;
       params?: { [key: string]: any };
       headers?: { [key: string]: string };
+      retryDelay?: number;
+      maxRetries?: number;
       timeout?: number;
     }
 
