@@ -20,7 +20,7 @@ declare module 'meteor/maka:rest' {
     };
     defaultHeaders: Record<string, string>;
     enableCors: boolean;
-    defaultOptionsEndpoint?: () => Route.RouteOptions;
+    defaultOptionsEndpoint?: () => RouteOptions;
     rateLimitOptions?: IRateLimiterOptions
     & {
       useRedis?: boolean;
@@ -30,14 +30,14 @@ declare module 'meteor/maka:rest' {
   }
 
   export default class MakaRest {
-    private readonly _routes: Route.Route[];
+    private readonly _routes: Route[];
     private readonly _config: MakaRestOptions;
     private readonly rateLimiter?: RateLimiterMemory | RateLimiterRedis;
     private readonly partialApiPath: string;
     static defaultAuthInitialized: boolean;
     request: Request;
     response: Response;
-    export constructor(options: Partial<MakaRestOptions>);
+    constructor(options: Partial<MakaRestOptions>);
 
     static interceptorType: (req: IncomingMessage, res: Response, next: Function) => void;
     static interceptors: Array<typeof MakaRest.interceptorType>;
@@ -53,11 +53,12 @@ declare module 'meteor/maka:rest' {
     private configureCors(): void;
     private normalizeApiPath(options: Partial<MakaRestOptions>): string;
     private initializeWildcardRoutes(): void;
-    addRoute(path: string, options: RouteOptions, endpoints?: { [method: string]: EndpointOptions }): void;
     private initializeDefaultAuthEndpoints(): void;
-    private login(incomingMessage: IncomingMessage): Promise<Codes.StatusResponse>;
-    private logout(incomingMessage: IncomingMessage): Promise<Codes.StatusResponse>;
-    private logoutAll(incomingMessage: IncomingMessage): Promise<Codes.StatusResponse>;
+    private login(incomingMessage: IncomingMessage): Promise<StatusResponse>;
+    private logout(incomingMessage: IncomingMessage): Promise<StatusResponse>;
+    private logoutAll(incomingMessage: IncomingMessage): Promise<StatusResponse>;
+
+    addRoute(path: string, routes: RouteOptions, options?: { [method: string]: EndpointOptions }): void;
   }
 
   interface Password {
@@ -164,32 +165,32 @@ declare module 'meteor/maka:rest' {
     authRequired?: boolean;
     roleRequired?: string[];
     scopeRequired?: string[];
+    rateLimitOptions?: {
+      points?: number;
+      duration?: number;
+    };
     action: (context: EndpointContext) => Promise<any>;
   }
 
   interface RouteOptions {
-    [key: string]: any; // Define specific route options here
-    rateLimit?: {
-      points?: number;
-      duration?: number;
-    };
+    [key: string]: any; // Define specific routes here (e.g., get, post, put, del)
   }
 
   class Route {
-    private api: MakaRest.MakaRest;
+    private api: MakaRest;
     private path: string;
     private options: RouteOptions;
     private endpoints: { [method: string]: EndpointOptions };
-    private jsonRoutes: JsonRoutes.JsonRoutes;
+    private jsonRoutes: JsonRoutes;
     private rateLimiter?: RateLimiterMemory | RateLimiterRedis;
 
-    constructor(api: MakaRest.MakaRest, path: string, options: RouteOptions, endpoints: { [method: string]: EndpointOptions });
+    constructor(api: MakaRest, path: string, options: RouteOptions, endpoints: { [method: string]: EndpointOptions });
 
     addToApi(onRoot?: boolean): void;
 
     private _resolveEndpoints(): void;
     private _configureEndpoints(): void;
-    private _callEndpoint(endpointContext: EndpointContext, endpoint: EndpointOptions): Promise<Codes.StatusResponse>;
+    private _callEndpoint(endpointContext: EndpointContext, endpoint: EndpointOptions): Promise<StatusResponse>;
     private _authAccepted(endpointContext: EndpointContext, endpoint: EndpointOptions): Promise<{ success: boolean; data?: any }>;
     private _authenticate(endpointContext: EndpointContext): Promise<{ success: boolean; data?: any }>;
     private _roleAccepted(endpointContext: EndpointContext, endpoint: EndpointOptions): boolean;
