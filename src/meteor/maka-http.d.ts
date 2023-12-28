@@ -1,4 +1,29 @@
 declare module 'meteor/maka:http' {
+    export const HTTP: {
+    /**
+     * Namespace for HTTP functionalities on the server.
+     */
+    server: typeof HTTPServer;
+
+    /**
+     * Namespace for HTTP functionalities on the server.
+     */
+    client: typeof HTTPClient;
+
+    /**
+     * Namespace for HTTP.call on client or server.
+     */
+    call: typeof HTTPClient.call | typeof HTTPServer.call;
+
+    /**
+     * Namespace for HTTP functionalities shared by both server and client.
+     */
+    del: typeof HTTPCommon.del;
+    get: typeof HTTPCommon.get;
+    post: typeof HTTPCommon.post;
+    put: typeof HTTPCommon.put;
+  };
+
   /**
    * Namespace for HTTP functionalities on the server.
    */
