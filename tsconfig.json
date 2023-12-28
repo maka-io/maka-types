@@ -1,9 +1,16 @@
 {
   "compilerOptions": {
+    "target": "ES2015",
+    "skipLibCheck": true,
+    "lib": [
+      "ES2021"
+    ],
+    "moduleResolution": "node",
+    "sourceMap": true,
     "outDir": "./dist",  // Output directory for compiled files
     "rootDir": "./src",  // Root directory of your source files
     "strict": true,      // Enable all strict type-checking options
-    "module": "commonjs",// Specify module code generation
+    "module": "ES2015",// Specify module code generation
     "target": "es5",     // Specify ECMAScript target version
     "declaration": true, // Generates corresponding '.d.ts' file
     "esModuleInterop": true

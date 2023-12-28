@@ -1,12 +1,17 @@
 {
   "name": "@maka/types",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc"
   },
   "devDependencies": {
+    "@redis/client": "^1.5.13",
+    "@types/meteor": "^2.9.7",
+    "@types/node": "^20.10.5",
+    "rate-limiter-flexible": "^4.0.0",
+    "redis": "^4.6.12",
     "typescript": "^4.9.5"
   }
 }
