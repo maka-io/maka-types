@@ -58,7 +58,7 @@ declare module 'meteor/maka:rest' {
     private logout(incomingMessage: IncomingMessage): Promise<StatusResponse>;
     private logoutAll(incomingMessage: IncomingMessage): Promise<StatusResponse>;
 
-    addRoute(path: string, routes: RouteOptions, options?: { [method: string]: EndpointOptions }): void;
+    addRoute(path: string, options: RouteOptions, endpoints?: { [method: string]: EndpointOptions }): void;
   }
 
   export interface Password {
@@ -165,15 +165,15 @@ declare module 'meteor/maka:rest' {
     authRequired?: boolean;
     roleRequired?: string[];
     scopeRequired?: string[];
-    rateLimitOptions?: {
-      points?: number;
-      duration?: number;
-    };
     action: (context: EndpointContext) => Promise<any>;
   }
 
   export interface RouteOptions {
     [key: string]: any; // Define specific routes here (e.g., get, post, put, del)
+    rateLimit?: {
+      points?: number;
+      duration?: number;
+    };
   }
 
   export class Route {
