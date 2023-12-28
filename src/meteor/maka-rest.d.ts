@@ -4,9 +4,9 @@ declare module 'meteor/maka:rest' {
   import { RedisClientType } from '@redis/client';
   import { Meteor } from 'meteor/meteor';
 
-  type LoginType = 'default' | null;
+  export type LoginType = 'default' | null;
 
-  interface MakaRestOptions {
+  export interface MakaRestOptions {
     debug?: boolean;
     paths: string[];
     apiRoot: string; // Root of the API, e.g., 'api'
@@ -61,26 +61,26 @@ declare module 'meteor/maka:rest' {
     addRoute(path: string, routes: RouteOptions, options?: { [method: string]: EndpointOptions }): void;
   }
 
-  interface Password {
+  export interface Password {
     digest: string;
     algorithm: 'sha-256';
   }
 
-  interface AuthToken {
+  export interface AuthToken {
     authToken: string;
     userId: string;
     when: Date;
     error?: string;
   }
 
-  interface BodyParams {
+  export interface BodyParams {
     username?: string;
     email?: string;
     password: string;
     hashed?: boolean;
   }
 
-  class Auth {
+  export class Auth {
     static loginWithPassword(user: Partial<Meteor.User>, password: string | Password): Promise<AuthToken>;
     private static validateUser(user: Partial<Meteor.User>): void;
     private static validatePassword(password: string | Password): void;
@@ -89,7 +89,7 @@ declare module 'meteor/maka:rest' {
     static extractPassword(body: BodyParams): string | Password;
   }
 
-  interface StatusResponse {
+  export interface StatusResponse {
     statusCode: number;
     status: string;
     data: any;
@@ -115,17 +115,17 @@ declare module 'meteor/maka:rest' {
     static serverError500(body?: any, extra?: any, headers?: Record<string, string>): StatusResponse;
   }
 
-  interface RouteHandler {
+  export interface RouteHandler {
     method: string;
     path: string;
     handler: (req: IncomingMessage, res: ServerResponse) => void;
   }
 
-  interface Middleware {
+  export interface Middleware {
     (req: IncomingMessage, res: ServerResponse, next: Function): void;
   }
 
-  class JsonRoutes {
+  export class JsonRoutes {
     private static instance: JsonRoutes;
     private routes: RouteHandler[];
     private middlewares: Middleware[];
@@ -150,7 +150,7 @@ declare module 'meteor/maka:rest' {
     public static processRoutes(apiRoot: string): void;
   }
 
-  interface EndpointContext {
+  export interface EndpointContext {
     urlParams: any;
     queryParams: any;
     bodyParams: any;
@@ -161,7 +161,7 @@ declare module 'meteor/maka:rest' {
     userId?: string;
   }
 
-  interface EndpointOptions {
+  export interface EndpointOptions {
     authRequired?: boolean;
     roleRequired?: string[];
     scopeRequired?: string[];
@@ -172,11 +172,11 @@ declare module 'meteor/maka:rest' {
     action: (context: EndpointContext) => Promise<any>;
   }
 
-  interface RouteOptions {
+  export interface RouteOptions {
     [key: string]: any; // Define specific routes here (e.g., get, post, put, del)
   }
 
-  class Route {
+  export class Route {
     private api: MakaRest;
     private path: string;
     private options: RouteOptions;
