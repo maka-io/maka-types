@@ -11,7 +11,7 @@
     "target": "es6",     // Specify ECMAScript target version
     "declaration": true, // Generates corresponding '.d.ts' file
     "esModuleInterop": true,
-    "diagnostics": true
+    "diagnostics": false
   },
   "include": [
     "src/**/*"  // Include all files in the src folder
