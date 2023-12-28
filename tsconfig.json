@@ -7,10 +7,11 @@
     "outDir": "./dist",  // Output directory for compiled files
     "rootDir": "./src",  // Root directory of your source files
     "strict": true,      // Enable all strict type-checking options
-    "module": "ES2015",// Specify module code generation
+    "module": "commonjs",// Specify module code generation
     "target": "es6",     // Specify ECMAScript target version
     "declaration": true, // Generates corresponding '.d.ts' file
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "diagnostics": true
   },
   "include": [
     "src/**/*"  // Include all files in the src folder
